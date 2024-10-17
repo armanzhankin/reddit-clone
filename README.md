@@ -5,7 +5,6 @@ This project involves creating a Reddit-like web platform where users can share 
 ## Features and Requirements
 
 ### 1. Backend (Go Microservices)
-- **Framework**: Services will be built using the **Echo** framework.
 - **WebSocket**: Real-time notifications and updates for post creation, comments, and votes will be implemented using WebSockets.
 - **gRPC**: Inter-service communication will be handled using **gRPC** for high performance and efficiency.
 - **Database**: Data will be stored in **PostgreSQL** using the **pgx** library for robust relational database management.

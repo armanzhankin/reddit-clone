@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package post_service;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/armanzhankin/reddit-clone/proto/post-service;post_service";
+
+service PostService{
+  rpc Create(CreatePostRequest) returns (CreatePostResponse) {
+    option (google.api.http) = {
+      post: "/post"
+      body: "*"
+    };
+  }
+  rpc Get(GetPostRequest) returns (GetPostResponse) {
+    option (google.api.http) = {
+      get: "/post"
+    };
+  }
+
+  rpc GetList(GetListRequest) returns (GetListResponse) {
+    option (google.api.http) = {
+      get: "/post/list"
+    };
+  }
+
+  rpc Update(UpdatePostRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      patch: "/post"
+      body: "*"
+    };
+  }
+
+  rpc Delete(DeletePostRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/post"
+    };
+  }
+}
+
+message PostInfo{
+  string title = 2;
+  string content = 3;
+  int64 author_id = 4;
+}
+
+message Post{
+  int64 id = 1;
+  PostInfo info = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+message UpdatePostInfo{
+  google.protobuf.StringValue title = 1;
+  google.protobuf.StringValue content = 2;
+  google.protobuf.Int64Value author_id =3;
+}
+
+message CreatePostRequest {
+  PostInfo info = 1;
+}
+
+message CreatePostResponse {
+  int64 id = 1;
+}
+
+message GetPostRequest{
+  int64 id = 1;
+}
+
+message GetPostResponse {
+  Post post = 1;
+}
+
+message GetListRequest {
+  int64 limit = 1;
+  int64 offset = 2;
+}
+
+message GetListResponse {
+  repeated Post posts = 1;
+}
+
+message UpdatePostRequest {
+  int64 id = 1;
+  UpdatePostInfo info = 2;
+}
+
+message DeletePostRequest {
+  int64 id = 1;
+}
